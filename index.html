@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Roboto+Mono:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* 1. 全螢幕自適應滿版重置 */
+    /* 1. 嚴格鎖定 1080x1920 滿版，專為 55 吋公播看板設計 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -28,12 +28,12 @@
     }
 
     body {
-      width: 100vw;
-      height: 100vh;
+      width: 1080px;
+      height: 1920px;
       background: #030712;
       color: #f8fafc;
       position: relative;
-      padding: 32px 36px;
+      padding: 60px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -46,44 +46,44 @@
       top: 15%;
       left: 50%;
       transform: translateX(-50%);
-      width: 70vw;
-      height: 60vh;
-      background: radial-gradient(circle, rgba(14, 165, 233, 0.07) 0%, rgba(0, 0, 0, 0) 70%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
       pointer-events: none;
     }
 
-    /* 2. 頂部 Header：精緻 Logo (高度 28px) */
+    /* 2. 頂部 Header：Logo 與語言指示器加大 */
     .header-bar {
       width: 100%;
-      height: 52px;
+      height: 80px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 24px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
       flex-shrink: 0;
     }
 
     .brand-logo-img {
-      height: 28px;
+      height: 48px;
       width: auto;
       object-fit: contain;
-      filter: brightness(0) invert(1) drop-shadow(0px 2px 6px rgba(255, 255, 255, 0.2));
+      filter: brightness(0) invert(1) drop-shadow(0px 2px 8px rgba(255, 255, 255, 0.25));
     }
 
     .lang-flags {
       display: flex;
-      gap: 8px;
+      gap: 12px;
     }
 
     .lang-item {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 800;
-      color: #475569;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 4px 10px;
-      border-radius: 6px;
+      color: #64748b;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 20px;
+      border-radius: 10px;
       transition: all 0.4s ease;
       letter-spacing: 1px;
     }
@@ -92,10 +92,10 @@
       color: #ffffff;
       background: #0284c7;
       border-color: #38bdf8;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
     }
 
-    /* 3. 時間核心區 */
+    /* 3. 中央時間核心區：巨型數位時鐘 */
     .hero-time-section {
       flex: 1;
       display: flex;
@@ -103,58 +103,58 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin: 10px 0;
     }
 
     .clock-time {
       font-family: 'Roboto Mono', monospace;
-      font-size: clamp(60px, 9.5vw, 120px);
+      font-size: 140px;
       font-weight: 900;
       color: #ffffff;
       line-height: 1;
-      letter-spacing: -3px;
+      letter-spacing: -4px;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
     }
 
     .clock-date {
-      font-size: clamp(16px, 2vw, 24px);
+      font-size: 36px;
       font-weight: 700;
       color: #38bdf8;
-      margin-top: 16px;
-      letter-spacing: 2px;
+      margin-top: 32px;
+      letter-spacing: 3px;
     }
 
-    /* 4. 氣候卡片（僅顯示高雄市，乾淨簡潔） */
+    /* 4. 天氣卡片：放大字體與佈局 */
     .weather-card-large {
       width: 100%;
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 20px 28px;
-      backdrop-filter: blur(20px);
+      height: 180px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 0 44px;
+      backdrop-filter: blur(24px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
       flex-shrink: 0;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
 
     .weather-left {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 28px;
       flex: 1;
       min-width: 0;
     }
 
     .weather-icon-svg {
-      width: 48px;
-      height: 48px;
+      width: 72px;
+      height: 72px;
       fill: #38bdf8;
       flex-shrink: 0;
-      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.5));
     }
 
     .weather-info-stack {
@@ -166,7 +166,7 @@
 
     .temp-main {
       font-family: 'Inter', sans-serif;
-      font-size: 48px;
+      font-size: 72px;
       font-weight: 900;
       color: #ffffff;
       line-height: 1;
@@ -174,10 +174,10 @@
     }
 
     .weather-desc-text {
-      font-size: 16px;
+      font-size: 24px;
       font-weight: 700;
-      color: #94a3b8;
-      margin-top: 6px;
+      color: #cbd5e1;
+      margin-top: 8px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -185,9 +185,9 @@
 
     .weather-right-details {
       display: flex;
-      gap: 20px;
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      padding-left: 20px;
+      gap: 36px;
+      border-left: 2px solid rgba(255, 255, 255, 0.12);
+      padding-left: 36px;
       flex-shrink: 0;
     }
 
@@ -199,20 +199,20 @@
     }
 
     .detail-item-title {
-      font-size: 11px;
-      color: #64748b;
+      font-size: 16px;
+      color: #94a3b8;
       font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
     .detail-item-value {
       font-family: 'Inter', sans-serif;
-      font-size: 17px;
+      font-size: 28px;
       font-weight: 800;
-      color: #f1f5f9;
-      margin-top: 4px;
+      color: #f8fafc;
+      margin-top: 6px;
       font-variant-numeric: tabular-nums;
     }
 
@@ -224,19 +224,19 @@
       opacity: 0;
     }
 
-    /* 5. 底部跑馬燈 */
+    /* 5. 底部跑馬燈：大字體遠視設計 */
     .footer-section {
       width: 100%;
-      height: 46px;
+      height: 64px;
       flex-shrink: 0;
     }
 
     .marquee-container {
       width: 100%;
-      height: 46px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      height: 64px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -245,15 +245,15 @@
     .marquee-label {
       background: #0284c7;
       color: #ffffff;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 900;
-      padding: 6px 14px;
-      border-radius: 6px;
-      margin: 0 10px;
+      padding: 10px 22px;
+      border-radius: 10px;
+      margin: 0 14px;
       z-index: 10;
       flex-shrink: 0;
       letter-spacing: 1px;
-      min-width: 90px;
+      min-width: 130px;
       text-align: center;
     }
 
@@ -271,9 +271,9 @@
       white-space: nowrap;
       padding-left: 100%;
       animation: marquee 32s linear infinite;
-      font-size: 15px;
-      color: #f1f5f9;
-      font-weight: 600;
+      font-size: 22px;
+      color: #f8fafc;
+      font-weight: 700;
     }
 
     @keyframes marquee {
@@ -301,7 +301,7 @@
     <div class="clock-date fade-text" id="date">2026 / 10 / 17 星期六</div>
   </div>
 
-  <!-- 3. 氣候卡片 (地點統一改為「高雄市 / Kaohsiung」) -->
+  <!-- 3. 氣候卡片 -->
   <div class="weather-card-large">
     <div class="weather-left">
       <svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zm-9-9v2c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zM7.05 18.01l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.02-.39-1.41 0z"/></svg>
@@ -359,7 +359,7 @@
       const daysZh = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
       const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const daysJp = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
-      const daysKr = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+      const daysKr = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토曜日'];
       const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
       const dateElem = document.getElementById('date');
@@ -412,7 +412,6 @@
     function updateWeatherText() {
       const descElem = document.getElementById('weather-desc');
       const lang = langs[currentLangIndex];
-      // 統一簡化地區為 高雄市 / Kaohsiung / 高雄市 / 가오슝시
       const locMap = { tw: '高雄市', en: 'Kaohsiung', jp: '高雄市', kr: '가오슝시' };
       descElem.textContent = `${weatherCache[lang]} • ${locMap[lang]}`;
     }
