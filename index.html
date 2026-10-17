@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 每 1800 秒 (30分鐘) 自動重新整理頁面，確保抓取 GitHub 最新版本 -->
   <meta http-equiv="refresh" content="1800">
-  <title>NKUST 智慧資訊看板 - YouTube 多媒體影音版</title>
+  <title>NKUST 智慧資訊看板 - 國際車站 Bento 旗艦版</title>
   
-  <!-- 匯入國際公播級專用字體：Inter & Roboto Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Roboto+Mono:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* 1. 全局鎖定 1080x1920 滿版 */
+    /* 1. 全局鎖定 1080x1920 滿版，國際 Transit 質感晨霧灰底 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -32,43 +30,43 @@
     body {
       width: 1080px;
       height: 1920px;
-      background: #f4f6f9;
+      background: #f1f5f9;
       color: #0f172a;
       position: relative;
-      padding: 40px 50px;
+      padding: 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* 2. 頂部 Header */
+    /* 2. 頂部 Header 卡片 */
     .header-bar {
       width: 100%;
-      height: 80px;
+      height: 84px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 32px;
+      padding: 0 36px;
       background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
       border: 1px solid #e2e8f0;
       flex-shrink: 0;
     }
 
     .brand-logo-img {
-      height: 44px;
+      height: 46px;
       width: auto;
       object-fit: contain;
     }
 
     .lang-flags {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
     .lang-item {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: #64748b;
       background: #f8fafc;
@@ -86,209 +84,236 @@
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
 
-    /* 3. YouTube 影片播放區 (高 600px) */
-    .video-container {
+    /* 3. 主媒體播放區 (沉浸式 16:9 大畫幅) */
+    .video-card-container {
       width: 100%;
-      height: 600px;
-      background: #000000;
-      border-radius: 28px;
+      height: 580px;
+      background: #0f172a;
+      border-radius: 32px;
       overflow: hidden;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
       position: relative;
-      margin-top: 16px;
+      margin-top: 20px;
       flex-shrink: 0;
     }
 
-    .video-container iframe {
+    .video-card-container iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
 
-    /* 影片動態標籤 */
     .video-badge {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      background: rgba(15, 23, 42, 0.8);
+      top: 24px;
+      left: 24px;
+      background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(12px);
       color: #ffffff;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
-      padding: 6px 18px;
-      border-radius: 20px;
+      padding: 8px 20px;
+      border-radius: 30px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       z-index: 5;
+      letter-spacing: 1px;
     }
 
     .badge-dot-red {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background-color: #ef4444;
       border-radius: 50%;
-      box-shadow: 0 0 8px #ef4444;
+      box-shadow: 0 0 10px #ef4444;
     }
 
-    /* 4. 中央主時鐘與日期 */
-    .hero-time-section {
-      text-align: center;
-      margin: 16px 0;
+    /* 4. Bento Box 核心雙欄排版區 */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
       flex-shrink: 0;
+    }
+
+    .bento-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 32px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Bento 卡片：NTP 時間區 */
+    .bento-card-time {
+      grid-column: span 2;
+      height: 200px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     }
 
     .clock-time {
       font-family: 'Roboto Mono', monospace;
-      font-size: 115px;
+      font-size: 100px;
       font-weight: 900;
       color: #0f172a;
       line-height: 1;
-      letter-spacing: -4px;
+      letter-spacing: -3px;
       font-variant-numeric: tabular-nums;
     }
 
     .clock-date {
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 800;
       color: #0284c7;
-      margin-top: 12px;
+      margin-top: 10px;
       letter-spacing: 2px;
     }
 
-    /* 5. 公告卡片區 */
-    .notice-card-small {
-      width: 100%;
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 28px 36px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-      flex-shrink: 0;
-      margin-bottom: 16px;
+    /* Bento 卡片：左側氣候大卡片 */
+    .bento-weather-main {
+      height: 280px;
     }
 
-    .card-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      color: #0284c7;
-      font-size: 16px;
-      font-weight: 800;
-      padding: 6px 16px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-    }
-
-    .card-title-main {
-      font-size: 34px;
-      font-weight: 900;
-      color: #0f172a;
-      line-height: 1.25;
-    }
-
-    .card-desc-body {
-      font-size: 20px;
-      color: #475569;
-      line-height: 1.5;
-      margin-top: 8px;
-    }
-
-    /* 6. 明亮氣候卡片 */
-    .weather-card-large {
-      width: 100%;
-      height: 160px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 24px;
-      padding: 0 40px;
+    .weather-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-      flex-shrink: 0;
-      margin-bottom: 16px;
     }
 
-    .weather-left {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex: 1;
-      min-width: 0;
+    .weather-title-tag {
+      font-size: 14px;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
-    .weather-icon-svg {
-      width: 64px;
-      height: 64px;
-      fill: #0284c7;
-      flex-shrink: 0;
-    }
-
-    .temp-main {
+    .temp-hero {
       font-family: 'Inter', sans-serif;
-      font-size: 64px;
+      font-size: 72px;
       font-weight: 900;
       color: #0f172a;
       line-height: 1;
+      margin-top: 10px;
     }
 
-    .weather-desc-text {
+    .weather-desc-sub {
       font-size: 22px;
       font-weight: 700;
-      color: #475569;
+      color: #0284c7;
       margin-top: 6px;
     }
 
-    .weather-right-details {
-      display: flex;
-      gap: 32px;
-      border-left: 2px solid #e2e8f0;
-      padding-left: 32px;
-      flex-shrink: 0;
+    /* Bento 卡片：右側氣候細節進度條卡片 */
+    .bento-weather-details {
+      height: 280px;
+      gap: 16px;
     }
 
-    .detail-column {
+    .meter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 800;
+      color: #64748b;
+    }
+
+    .meter-val {
+      color: #0f172a;
+      font-weight: 900;
+    }
+
+    .meter-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .meter-bar-fill {
+      height: 100%;
+      background: #0284c7;
+      border-radius: 10px;
+      transition: width 0.8s ease;
+    }
+
+    /* 5. 告示與宣傳單張卡片 */
+    .announcement-banner {
+      width: 100%;
+      height: 220px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 32px 40px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      text-align: right;
+      margin-top: 20px;
+      flex-shrink: 0;
     }
 
-    .detail-item-title {
-      font-size: 15px;
-      color: #64748b;
+    .card-badge-blue {
+      display: inline-flex;
+      align-items: center;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      color: #0284c7;
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-bottom: 10px;
     }
 
-    .detail-item-value {
-      font-family: 'Inter', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
+    .banner-title {
+      font-size: 30px;
+      font-weight: 900;
       color: #0f172a;
-      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .banner-desc {
+      font-size: 18px;
+      color: #475569;
+      margin-top: 8px;
+      line-height: 1.5;
     }
 
     .fade-text { transition: opacity 0.4s ease; }
     .fade-out { opacity: 0; }
 
-    /* 7. 底部跑馬燈 (含漸層遮罩) */
+    /* 6. 底部雙色高對比跑馬燈 */
     .footer-section {
       width: 100%;
-      height: 64px;
+      height: 68px;
       flex-shrink: 0;
+      margin-top: 20px;
     }
 
     .marquee-container {
       width: 100%;
-      height: 64px;
+      height: 68px;
       background: #0284c7;
-      border-radius: 16px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -300,9 +325,9 @@
       color: #0284c7;
       font-size: 16px;
       font-weight: 900;
-      padding: 8px 20px;
-      border-radius: 10px;
-      margin: 0 14px;
+      padding: 8px 22px;
+      border-radius: 12px;
+      margin: 0 16px;
       z-index: 10;
       flex-shrink: 0;
       letter-spacing: 1px;
@@ -348,52 +373,71 @@
     </div>
   </div>
 
-  <!-- 2. YouTube 多媒體播放區 -->
-  <div class="video-container">
+  <!-- 2. YouTube 多媒體展示區 -->
+  <div class="video-card-container">
     <div class="video-badge">
       <div class="badge-dot-red"></div>
-      LIVE MEDIA
+      LIVE BROADCAST
     </div>
-    <!-- 影片播放器容器 -->
     <div id="player-frame" style="width: 100%; height: 100%;"></div>
   </div>
 
-  <!-- 3. 中央時間 -->
-  <div class="hero-time-section">
-    <div class="clock-time" id="clock">--:--:--</div>
-    <div class="clock-date fade-text" id="date">連線國家標準時間中...</div>
-  </div>
+  <!-- 3. Bento Box 模組化排版 -->
+  <div class="bento-grid">
+    
+    <!-- 巨型 NTP 國家標準時間卡片 (全寬) -->
+    <div class="bento-card bento-card-time">
+      <div class="clock-time" id="clock">--:--:--</div>
+      <div class="clock-date fade-text" id="date">連線國家標準時間中...</div>
+    </div>
 
-  <!-- 4. 公告卡片區 -->
-  <div class="notice-card-small">
-    <div class="card-badge">ANNOUNCEMENT</div>
-    <div class="card-title-main" id="notice-title">歡迎光臨高科大智慧公共區域</div>
-    <div class="card-desc-body" id="notice-desc">本看板結合現場多媒體影片宣導、即時氣象與國家 NTP 標準時間。</div>
-  </div>
-
-  <!-- 5. 氣候卡片 -->
-  <div class="weather-card-large">
-    <div class="weather-left">
-      <svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zm-9-9v2c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zM7.05 18.01l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.02-.39-1.41 0z"/></svg>
-      <div class="weather-info-stack">
-        <div class="temp-main" id="temp">--°C</div>
-        <div class="weather-desc-text fade-text" id="weather-desc">高雄市</div>
+    <!-- 即時氣溫主卡片 (左欄) -->
+    <div class="bento-card bento-weather-main">
+      <div class="weather-header">
+        <span class="weather-title-tag">WEATHER</span>
+        <svg style="width: 36px; height: 36px; fill: #0284c7;" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zm-9-9v2c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zM7.05 18.01l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.02-.39-1.41 0z"/></svg>
+      </div>
+      <div>
+        <div class="temp-hero" id="temp">--°C</div>
+        <div class="weather-desc-sub fade-text" id="weather-desc">高雄市</div>
       </div>
     </div>
 
-    <div class="weather-right-details">
-      <div class="detail-column">
-        <div class="detail-item-title fade-text" id="title-humidity">相對濕度</div>
-        <div class="detail-item-value" id="humidity">--%</div>
+    <!-- 氣候進度條細節卡片 (右欄) -->
+    <div class="bento-card bento-weather-details">
+      <span class="weather-title-tag">ENVIRONMENT</span>
+      
+      <div class="meter-item">
+        <div class="meter-label">
+          <span id="title-humidity">相對濕度</span>
+          <span class="meter-val" id="humidity">--%</span>
+        </div>
+        <div class="meter-bar-bg">
+          <div class="meter-bar-fill" id="humidity-bar" style="width: 50%;"></div>
+        </div>
       </div>
-      <div class="detail-column">
-        <div class="detail-item-title fade-text" id="title-wind">即時風速</div>
-        <div class="detail-item-value" id="wind">-- km/h</div>
+
+      <div class="meter-item">
+        <div class="meter-label">
+          <span id="title-wind">即時風速</span>
+          <span class="meter-val" id="wind">-- km/h</span>
+        </div>
+        <div class="meter-bar-bg">
+          <div class="meter-bar-fill" id="wind-bar" style="width: 30%;"></div>
+        </div>
       </div>
     </div>
+
   </div>
 
-  <!-- 6. 底部跑馬燈 -->
+  <!-- 4. 公告事項卡片 -->
+  <div class="announcement-banner">
+    <div class="card-badge-blue">CAMPUS NOTICE</div>
+    <div class="banner-title" id="notice-title">歡迎光臨高科大智慧公共區域</div>
+    <div class="banner-desc" id="notice-desc">本看板結合現場多媒體宣導、即時氣象與國家 NTP 標準時間。</div>
+  </div>
+
+  <!-- 5. 底部跑馬燈 -->
   <div class="footer-section">
     <div class="marquee-container">
       <div class="marquee-label">NOTICE / 通告</div>
@@ -409,19 +453,14 @@
   </div>
 
   <script>
-    // ===================================================
-    // 💡 隨時更換 YouTube 影片：只要修改引號內的 ID 即可！
-    // 例如網址是 https://www.youtube.com/watch?v=9KUGYFVZFKw
-    // 裡面的 ID 就是 '9KUGYFVZFKw'
-    // ===================================================
+    // 💡 YouTube 影片 ID
     const MY_YOUTUBE_ID = 'Syuwr393t4Q'; 
 
-    // 初始化載入 YouTube (設定 autoplay=1 & mute=0 開放聲音播放)
     function loadYouTubeVideo(videoId) {
       const container = document.getElementById('player-frame');
       container.innerHTML = `
         <iframe 
-          src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
         </iframe>
@@ -429,13 +468,12 @@
     }
     loadYouTubeVideo(MY_YOUTUBE_ID);
 
-    // 全域語言與時間設定
     let currentLangIndex = 0;
     const langs = ['tw', 'en', 'jp', 'kr'];
     let weatherCache = { tw: '晴朗', en: 'Sunny', jp: '快晴', kr: '맑음' };
     let timeOffsetMs = 0;
 
-    // 1. NTP 國家時間校準
+    // 1. NTP 國家時間同步
     async function syncTaiwanNTPTime() {
       const startTime = Date.now();
       try {
@@ -497,7 +535,7 @@
     setInterval(updateClock, 1000);
     setInterval(syncTaiwanNTPTime, 600000);
 
-    // 2. 即時氣象
+    // 2. 即時氣壓與風速進度條同步
     async function fetchWeather() {
       try {
         const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=22.76&longitude=120.38&current_weather=true&hourly=relativehumidity_2m');
@@ -507,8 +545,14 @@
         document.getElementById('temp').textContent = `${Math.round(weather.temperature)}°C`;
         document.getElementById('wind').textContent = `${Math.round(weather.windspeed)} km/h`;
         
+        // 自動更新進度條長度
+        const windSpeed = Math.min(Math.round(weather.windspeed) * 3, 100);
+        document.getElementById('wind-bar').style.width = `${windSpeed}%`;
+
         if (data.hourly && data.hourly.relativehumidity_2m) {
-          document.getElementById('humidity').textContent = `${data.hourly.relativehumidity_2m[0]}%`;
+          const humidity = data.hourly.relativehumidity_2m[0];
+          document.getElementById('humidity').textContent = `${humidity}%`;
+          document.getElementById('humidity-bar').style.width = `${humidity}%`;
         }
 
         const code = weather.weathercode;
@@ -536,7 +580,7 @@
     fetchWeather();
     setInterval(fetchWeather, 600000);
 
-    // 3. 多國語言輪播
+    // 3. 多國語言動態切換
     function rotateLanguage() {
       const fadeTargets = document.querySelectorAll('.fade-text');
       fadeTargets.forEach(el => el.classList.add('fade-out'));
