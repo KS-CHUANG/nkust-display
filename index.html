@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 每 1800 秒 (30分鐘) 自動重新整理頁面，確保抓取 GitHub 最新版本 -->
   <meta http-equiv="refresh" content="1800">
-  <title>NKUST 智慧資訊看板 - 旗艦極簡版</title>
+  <title>NKUST 智慧資訊看板 - YouTube 多媒體影音版</title>
   
   <!-- 匯入國際公播級專用字體：Inter & Roboto Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Roboto+Mono:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* 1. 嚴格鎖定 1080x1920 滿版，國際 Transit 極簡晨霧灰底 */
+    /* 1. 全局鎖定 1080x1920 滿版 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -35,16 +35,16 @@
       background: #f4f6f9;
       color: #0f172a;
       position: relative;
-      padding: 50px 60px;
+      padding: 40px 50px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* 2. 頂部 Header：白底卡片與 Logo */
+    /* 2. 頂部 Header */
     .header-bar {
       width: 100%;
-      height: 90px;
+      height: 80px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -57,7 +57,7 @@
     }
 
     .brand-logo-img {
-      height: 48px;
+      height: 44px;
       width: auto;
       object-fit: contain;
     }
@@ -73,7 +73,7 @@
       color: #64748b;
       background: #f8fafc;
       border: 1px solid #cbd5e1;
-      padding: 8px 20px;
+      padding: 6px 18px;
       border-radius: 10px;
       transition: all 0.4s ease;
       letter-spacing: 1px;
@@ -86,16 +86,63 @@
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
 
-    /* 3. 中央主時鐘區 */
+    /* 3. YouTube 影片播放區 (高 600px) */
+    .video-container {
+      width: 100%;
+      height: 600px;
+      background: #000000;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      position: relative;
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 影片動態標籤 */
+    .video-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 6px 18px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 5;
+    }
+
+    .badge-dot-red {
+      width: 8px;
+      height: 8px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    /* 4. 中央主時鐘與日期 */
     .hero-time-section {
       text-align: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin: 16px 0;
+      flex-shrink: 0;
     }
 
     .clock-time {
       font-family: 'Roboto Mono', monospace;
-      font-size: 135px;
+      font-size: 115px;
       font-weight: 900;
       color: #0f172a;
       line-height: 1;
@@ -104,166 +151,104 @@
     }
 
     .clock-date {
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 800;
       color: #0284c7;
-      margin-top: 20px;
+      margin-top: 12px;
       letter-spacing: 2px;
     }
 
-    /* 4. 中央多功能公告輪播卡片區 */
-    .hero-card-container {
+    /* 5. 公告卡片區 */
+    .notice-card-small {
       width: 100%;
-      height: 600px;
-      position: relative;
-      margin: 10px 0;
-    }
-
-    .notice-card {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background: #ffffff;
-      border-radius: 28px;
-      padding: 44px 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      border-radius: 24px;
+      padding: 28px 36px;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      pointer-events: none;
-    }
-
-    .notice-card.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      flex-shrink: 0;
+      margin-bottom: 16px;
     }
 
     .card-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #f0f9ff;
       border: 1px solid #bae6fd;
       color: #0284c7;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      padding: 8px 20px;
-      border-radius: 30px;
-      width: fit-content;
-      letter-spacing: 1px;
-    }
-
-    .badge-dot {
-      width: 10px;
-      height: 10px;
-      background-color: #0284c7;
-      border-radius: 50%;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 10px;
     }
 
     .card-title-main {
-      font-size: 48px;
+      font-size: 34px;
       font-weight: 900;
       color: #0f172a;
       line-height: 1.25;
-      letter-spacing: -1px;
-      margin-top: 16px;
-    }
-
-    .card-title-sub {
-      font-size: 24px;
-      font-weight: 700;
-      color: #0284c7;
-      margin-top: 8px;
     }
 
     .card-desc-body {
-      font-size: 22px;
+      font-size: 20px;
       color: #475569;
-      line-height: 1.6;
-      margin-top: 16px;
-      font-weight: 500;
+      line-height: 1.5;
+      margin-top: 8px;
     }
 
-    .card-footer-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 18px;
-      font-weight: 700;
-      color: #64748b;
-      padding-top: 20px;
-      border-top: 2px dashed #f1f5f9;
-    }
-
-    /* 5. 明亮氣候卡片 */
+    /* 6. 明亮氣候卡片 */
     .weather-card-large {
       width: 100%;
-      height: 180px;
+      height: 160px;
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 28px;
-      padding: 0 48px;
+      border-radius: 24px;
+      padding: 0 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
       flex-shrink: 0;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .weather-left {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
       flex: 1;
       min-width: 0;
     }
 
     .weather-icon-svg {
-      width: 72px;
-      height: 72px;
+      width: 64px;
+      height: 64px;
       fill: #0284c7;
       flex-shrink: 0;
     }
 
-    .weather-info-stack {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-    }
-
     .temp-main {
       font-family: 'Inter', sans-serif;
-      font-size: 72px;
+      font-size: 64px;
       font-weight: 900;
       color: #0f172a;
       line-height: 1;
-      font-variant-numeric: tabular-nums;
     }
 
     .weather-desc-text {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: #475569;
-      margin-top: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-top: 6px;
     }
 
     .weather-right-details {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       border-left: 2px solid #e2e8f0;
-      padding-left: 40px;
+      padding-left: 32px;
       flex-shrink: 0;
     }
 
@@ -275,43 +260,35 @@
     }
 
     .detail-item-title {
-      font-size: 16px;
+      font-size: 15px;
       color: #64748b;
       font-weight: 800;
       letter-spacing: 1px;
-      text-transform: uppercase;
-      white-space: nowrap;
     }
 
     .detail-item-value {
       font-family: 'Inter', sans-serif;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       color: #0f172a;
-      margin-top: 6px;
-      font-variant-numeric: tabular-nums;
+      margin-top: 4px;
     }
 
-    /* 淡入淡出效果 */
-    .fade-text {
-      transition: opacity 0.4s ease;
-    }
-    .fade-out {
-      opacity: 0;
-    }
+    .fade-text { transition: opacity 0.4s ease; }
+    .fade-out { opacity: 0; }
 
-    /* 6. 底部高對比藍色跑馬燈 (含淡入淡出遮罩) */
+    /* 7. 底部跑馬燈 (含漸層遮罩) */
     .footer-section {
       width: 100%;
-      height: 68px;
+      height: 64px;
       flex-shrink: 0;
     }
 
     .marquee-container {
       width: 100%;
-      height: 68px;
+      height: 64px;
       background: #0284c7;
-      border-radius: 18px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -321,16 +298,14 @@
     .marquee-label {
       background: #ffffff;
       color: #0284c7;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
-      padding: 10px 24px;
-      border-radius: 12px;
-      margin: 0 16px;
+      padding: 8px 20px;
+      border-radius: 10px;
+      margin: 0 14px;
       z-index: 10;
       flex-shrink: 0;
       letter-spacing: 1px;
-      min-width: 140px;
-      text-align: center;
     }
 
     .marquee-scroll-area {
@@ -340,7 +315,6 @@
       height: 100%;
       display: flex;
       align-items: center;
-      /* 跑馬燈兩端漸層遮罩效果 */
       mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     }
@@ -350,7 +324,7 @@
       white-space: nowrap;
       padding-left: 100%;
       animation: marquee 32s linear infinite;
-      font-size: 24px;
+      font-size: 22px;
       color: #ffffff;
       font-weight: 700;
     }
@@ -374,75 +348,32 @@
     </div>
   </div>
 
-  <!-- 2. 中央大數字時間與動態日期 -->
+  <!-- 2. YouTube 多媒體播放區 -->
+  <div class="video-container">
+    <div class="video-badge">
+      <div class="badge-dot-red"></div>
+      LIVE MEDIA
+    </div>
+    <!-- 影片播放器容器 -->
+    <div id="player-frame" style="width: 100%; height: 100%;"></div>
+  </div>
+
+  <!-- 3. 中央時間 -->
   <div class="hero-time-section">
     <div class="clock-time" id="clock">--:--:--</div>
     <div class="clock-date fade-text" id="date">連線國家標準時間中...</div>
   </div>
 
-  <!-- 3. 中央動態公告輪播卡片 (多卡片切換) -->
-  <div class="hero-card-container">
-    
-    <!-- 卡片 1: 現場服務指引 -->
-    <div class="notice-card active">
-      <div>
-        <div class="card-badge">
-          <div class="badge-dot"></div>
-          SERVICE ANNOUNCEMENT
-        </div>
-        <div class="card-title-main">智慧公共告示系統</div>
-        <div class="card-title-sub">Smart Public Information System</div>
-        <div class="card-desc-body">
-          歡迎光臨國立高雄科技大學公共區域。本看板提供即時國家標準時間、即時天候預報與緊急通知廣播服務。
-        </div>
-      </div>
-      <div class="card-footer-info" id="card-foot-1">
-        LOCATION: NKUST PUBLIC AREA
-      </div>
-    </div>
-
-    <!-- 卡片 2: 環境衛生宣導 -->
-    <div class="notice-card">
-      <div>
-        <div class="card-badge">
-          <div class="badge-dot"></div>
-          ENVIRONMENT & CAMPUS
-        </div>
-        <div class="card-title-main">維護公共環境整潔</div>
-        <div class="card-title-sub">Keep Campus Clean & Tidy</div>
-        <div class="card-desc-body">
-          請隨手帶走個人垃圾與飲用容器，共同維護舒適宜人的公共討論與休憩空間。
-        </div>
-      </div>
-      <div class="card-footer-info" id="card-foot-2">
-        NOTICE: GENERAL CAMPUS GUIDANCE
-      </div>
-    </div>
-
-    <!-- 卡片 3: 智慧資訊服務 -->
-    <div class="notice-card">
-      <div>
-        <div class="card-badge">
-          <div class="badge-dot"></div>
-          INFORMATION & WEATHER
-        </div>
-        <div class="card-title-main">即時氣象與時間連線</div>
-        <div class="card-title-sub">Live NTP & Weather Telemetry</div>
-        <div class="card-desc-body">
-          氣候數據每 10 分鐘透過雲端 API 自動校準更新，系統精準鎖定台灣標準時間 (UTC+8)。
-        </div>
-      </div>
-      <div class="card-footer-info" id="card-foot-3">
-        SYSTEM STATUS: ONLINE / NTP SYNCED
-      </div>
-    </div>
-
+  <!-- 4. 公告卡片區 -->
+  <div class="notice-card-small">
+    <div class="card-badge">ANNOUNCEMENT</div>
+    <div class="card-title-main" id="notice-title">歡迎光臨高科大智慧公共區域</div>
+    <div class="card-desc-body" id="notice-desc">本看板結合現場多媒體影片宣導、即時氣象與國家 NTP 標準時間。</div>
   </div>
 
-  <!-- 4. 氣候卡片 -->
+  <!-- 5. 氣候卡片 -->
   <div class="weather-card-large">
     <div class="weather-left">
-      <!-- 純 SVG 太陽/雲朵天氣圖示 (完全不使用 Emoji) -->
       <svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zm-9-9v2c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zM7.05 18.01l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.02-.39-1.41 0z"/></svg>
       <div class="weather-info-stack">
         <div class="temp-main" id="temp">--°C</div>
@@ -450,7 +381,6 @@
       </div>
     </div>
 
-    <!-- 右側數據欄位 -->
     <div class="weather-right-details">
       <div class="detail-column">
         <div class="detail-item-title fade-text" id="title-humidity">相對濕度</div>
@@ -463,7 +393,7 @@
     </div>
   </div>
 
-  <!-- 5. 底部跑馬燈 -->
+  <!-- 6. 底部跑馬燈 -->
   <div class="footer-section">
     <div class="marquee-container">
       <div class="marquee-label">NOTICE / 通告</div>
@@ -479,18 +409,35 @@
   </div>
 
   <script>
+    // ===================================================
+    // 💡 隨時更換 YouTube 影片：只要修改引號內的 ID 即可！
+    // 例如網址是 https://www.youtube.com/watch?v=9KUGYFVZFKw
+    // 裡面的 ID 就是 '9KUGYFVZFKw'
+    // ===================================================
+    const MY_YOUTUBE_ID = 'a1BGFLYAPV2__Gvs'; 
+
+    // 初始化載入 YouTube (設定 autoplay=1 & mute=0 開放聲音播放)
+    function loadYouTubeVideo(videoId) {
+      const container = document.getElementById('player-frame');
+      container.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+    loadYouTubeVideo(MY_YOUTUBE_ID);
+
+    // 全域語言與時間設定
     let currentLangIndex = 0;
     const langs = ['tw', 'en', 'jp', 'kr'];
     let weatherCache = { tw: '晴朗', en: 'Sunny', jp: '快晴', kr: '맑음' };
-    
-    // 時間校正全域變數 (與國家標準毫秒時間差)
     let timeOffsetMs = 0;
 
-    // 1. 雙重保險向網路 NTP 伺服器校準「台灣標準時間 (Asia/Taipei)」
+    // 1. NTP 國家時間校準
     async function syncTaiwanNTPTime() {
       const startTime = Date.now();
-      
-      // 第一源：timeapi.io
       try {
         const res = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Taipei');
         const data = await res.json();
@@ -500,11 +447,8 @@
           timeOffsetMs = trueTaiwanTime - Date.now();
           return;
         }
-      } catch (e) {
-        console.log('Primary NTP source failed, trying secondary...', e);
-      }
+      } catch (e) { console.log('Primary NTP source failed', e); }
 
-      // 第二備用源：worldtimeapi.org
       try {
         const res = await fetch('https://worldtimeapi.org/api/timezone/Asia/Taipei');
         const data = await res.json();
@@ -513,17 +457,11 @@
           const trueTaiwanTime = new Date(data.datetime).getTime() + networkDelay;
           timeOffsetMs = trueTaiwanTime - Date.now();
         }
-      } catch (e) {
-        console.log('Secondary NTP source failed.', e);
-      }
+      } catch (e) { console.log('Secondary NTP source failed', e); }
     }
 
-    // 取得 NTP 校準後的 Date 物件
-    function getTaiwanNTPDate() {
-      return new Date(Date.now() + timeOffsetMs);
-    }
+    function getTaiwanNTPDate() { return new Date(Date.now() + timeOffsetMs); }
 
-    // 2. 更新時鐘與日期
     function updateClock() {
       const now = getTaiwanNTPDate();
       const h = String(now.getHours()).padStart(2, '0');
@@ -555,15 +493,11 @@
       }
     }
 
-    // 初始化：連線 NTP 校時
-    syncTaiwanNTPTime().then(() => {
-      updateClock();
-    });
-    
+    syncTaiwanNTPTime().then(() => { updateClock(); });
     setInterval(updateClock, 1000);
-    setInterval(syncTaiwanNTPTime, 600000); // 10分鐘重新對齊 NTP
+    setInterval(syncTaiwanNTPTime, 600000);
 
-    // 3. 即時氣候連線 (Open-Meteo API)
+    // 2. 即時氣象
     async function fetchWeather() {
       try {
         const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=22.76&longitude=120.38&current_weather=true&hourly=relativehumidity_2m');
@@ -589,9 +523,7 @@
         }
 
         updateWeatherText();
-      } catch (e) {
-        console.log('Weather Error', e);
-      }
+      } catch (e) { console.log('Weather Error', e); }
     }
 
     function updateWeatherText() {
@@ -604,28 +536,15 @@
     fetchWeather();
     setInterval(fetchWeather, 600000);
 
-    // 4. 多功能輪播公告卡片控制器 (每 8 秒滑動切換)
-    let currentCardIndex = 0;
-    const cards = document.querySelectorAll('.notice-card');
-    function rotateNoticeCard() {
-      cards[currentCardIndex].classList.remove('active');
-      currentCardIndex = (currentCardIndex + 1) % cards.length;
-      cards[currentCardIndex].classList.add('active');
-    }
-    setInterval(rotateNoticeCard, 8000);
-
-    // 5. 多國語言輪播
+    // 3. 多國語言輪播
     function rotateLanguage() {
       const fadeTargets = document.querySelectorAll('.fade-text');
-      
       fadeTargets.forEach(el => el.classList.add('fade-out'));
 
       setTimeout(() => {
         document.getElementById(`lang-${langs[currentLangIndex]}`).classList.remove('active');
-
         currentLangIndex = (currentLangIndex + 1) % langs.length;
         const lang = langs[currentLangIndex];
-
         document.getElementById(`lang-${lang}`).classList.add('active');
 
         updateClock();
